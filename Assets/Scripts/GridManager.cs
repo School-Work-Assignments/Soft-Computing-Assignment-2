@@ -12,11 +12,15 @@ public class GridManager : MonoBehaviour
     private GameObject obstaclePrefab;
     private GameObject playerPrefab;
     private GameObject enemyPrefab;
+    private GameObject foodPrefab;
 
     private Vector2Int playerSpawnPos;
 
     private int enemyCount = 2;
     private int enemySpeed;
+
+    private int foodCount;
+    private bool initialFoodSpawned = false;
 
     private int width = 30;
     private int height = 30;
@@ -27,12 +31,14 @@ public class GridManager : MonoBehaviour
         obstaclePrefab = Resources.Load("Prefabs/Obstacle") as GameObject;
         playerPrefab = Resources.Load("Prefabs/Player") as GameObject;
         enemyPrefab = Resources.Load("Prefabs/Enemy") as GameObject;
+        foodPrefab = Resources.Load("Prefabs/Food") as GameObject;
 
         offset = (width / 2) - 1;
         enemySpeed = GameManager.speed;
 
         GenerateObstacles();
         SpawnPlayer();
+        SpawnFood();
 
         for (int i = 0; i < enemyCount; i++)
             SpawnEnemy();
@@ -85,5 +91,22 @@ public class GridManager : MonoBehaviour
         }
         else
             SpawnEnemy();
+    }
+
+    public void SpawnFood()
+    {
+        if (initialFoodSpawned)
+            foodCount = 1;
+        else
+        {
+            foodCount = 5;
+            initialFoodSpawned = true;
+        }
+
+        for (int i = 0; i < foodCount; i++)
+        {
+            Vector2Int randomTile = availableTiles[Random.Range(0, availableTiles.Count)];
+            Instantiate(foodPrefab, new Vector3(randomTile.x - offset, randomTile.y - offset), Quaternion.identity);
+        }
     }
 }

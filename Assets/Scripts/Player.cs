@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -12,13 +13,13 @@ public class Player : MonoBehaviour
     private float moveSpeed = 5f;
     private Vector2 movePos;
 
-    private int lives = 3;
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
+
+        Debug.Log(GameManager.playerName);
     }
 
     void FixedUpdate()
@@ -35,8 +36,32 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            lives--;
-            Debug.Log(lives);
+            if (GameManager.lives > 0)
+            {
+                GameManager.lives--;
+                GameManager.isBuffed = false;
+                SceneManager.LoadScene("Main");
+            }
+            else
+                SceneManager.LoadScene("Highscore");
         }
+
+        if (collision.gameObject.tag == "Food")
+        {
+            StartCoroutine(AteFood());
+            Destroy(collision.gameObject);
+            StopCoroutine(AteFood());
+        }
+    }
+
+    private IEnumerator AteFood()
+    {
+        GameManager.isBuffed = true;
+        Debug.Log(GameManager.isBuffed);
+
+        yield return new WaitForSeconds(10f);
+
+        GameManager.isBuffed = false;
+        Debug.Log(GameManager.isBuffed);
     }
 }

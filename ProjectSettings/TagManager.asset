@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Astart
   - Enemy
+  - NameInput
+  - Food
   layers:
   - Default
   - TransparentFX
