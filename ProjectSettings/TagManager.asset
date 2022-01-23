@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - NameInput
   - Food
+  - ScoreName
+  - ScoreNum
+  - ScoreDifficulty
   layers:
   - Default
   - TransparentFX

@@ -26,8 +26,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        //FOOD FUNCTIONALITY NEEDS TO BE FIXED
-
         if (GameManager.isBuffed)
         {
             if (!buffedDestSet)
@@ -55,7 +53,6 @@ public class Enemy : MonoBehaviour
 
         if (Vector3.Distance(randomTileV3, player.transform.position) > 15)
         {
-            Debug.Log(buffedTarget);
             buffedTarget.transform.position = randomTileV3;
             enemyDest.target = buffedTarget.transform;
         }

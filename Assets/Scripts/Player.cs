@@ -18,8 +18,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
-
-        Debug.Log(GameManager.playerName);
     }
 
     void FixedUpdate()
@@ -49,7 +47,10 @@ public class Player : MonoBehaviour
         if (collision.gameObject.tag == "Food")
         {
             StartCoroutine(AteFood());
+
             Destroy(collision.gameObject);
+            GameManager.SetScore(10);
+
             StopCoroutine(AteFood());
         }
     }
@@ -57,11 +58,9 @@ public class Player : MonoBehaviour
     private IEnumerator AteFood()
     {
         GameManager.isBuffed = true;
-        Debug.Log(GameManager.isBuffed);
 
         yield return new WaitForSeconds(10f);
 
         GameManager.isBuffed = false;
-        Debug.Log(GameManager.isBuffed);
     }
 }

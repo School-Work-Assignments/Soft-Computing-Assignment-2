@@ -8,14 +8,40 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    private static TextMeshProUGUI scoreDifficulty;
+    private static TextMeshProUGUI scoreName;
+    private static TextMeshProUGUI scoreNum;
+
+    private static string difficulty;
     public static int speed = 3;
     public static int lives = 3;
+    public static int score = 0;
     public static bool isBuffed = false;
     public static string playerName;
+
+    private void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "Highscore")
+        {
+            scoreDifficulty = GameObject.FindGameObjectWithTag("ScoreDifficulty").GetComponent<TextMeshProUGUI>();
+            scoreName = GameObject.FindGameObjectWithTag("ScoreName").GetComponent<TextMeshProUGUI>();
+            scoreNum = GameObject.FindGameObjectWithTag("ScoreNum").GetComponent<TextMeshProUGUI>();
+
+            scoreName.text = playerName;
+            scoreNum.text = score.ToString();
+            scoreDifficulty.text = difficulty;
+        }
+    }
+
+    public static void SetScore(int newScore)
+    {
+        score += newScore;
+    }
 
     public void Easy()
     {
         speed = 3;
+        difficulty = "Easy";
         GetName();
 
         if (playerName != null)
@@ -25,6 +51,7 @@ public class GameManager : MonoBehaviour
     public void Medium()
     {
         speed = 5;
+        difficulty = "Medium";
         GetName();
 
         if (playerName != null)
@@ -34,6 +61,7 @@ public class GameManager : MonoBehaviour
     public void Hard()
     {
         speed = 7;
+        difficulty = "Hard";
         GetName();
 
         if (playerName != null)
