@@ -15,14 +15,17 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         enemyDest = GetComponent<AIDestinationSetter>();
-
-        StartCoroutine(SeekPlayer());
     }
 
-    private IEnumerator SeekPlayer()
+    private void Update()
     {
-
-
-        yield return null;
+        if (GameManager.isBuffed)
+        {
+            Debug.Log("PLAYER BUFFED");
+        }
+        else
+        {
+            enemyDest.target = player.transform;
+        }
     }
 }

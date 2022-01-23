@@ -8,10 +8,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private Rigidbody2D rb;
-    private CharacterController cc;
 
     private float moveSpeed = 5f;
-    Vector2 movePos;
+    private Vector2 movePos;
+
+    private int lives = 3;
 
     void Start()
     {
@@ -25,6 +26,17 @@ public class Player : MonoBehaviour
         movePos.x = Input.GetAxisRaw("Horizontal");
         movePos.y = Input.GetAxisRaw("Vertical");
 
-        rb.MovePosition(rb.position + movePos * moveSpeed * Time.fixedDeltaTime);
+        rb.velocity = new Vector2(movePos.x * moveSpeed, movePos.y * moveSpeed);
+
+        AstarPath.active.Scan();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            lives--;
+            Debug.Log(lives);
+        }
     }
 }

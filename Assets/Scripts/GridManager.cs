@@ -1,14 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
+using System.Linq;
 
 public class GridManager : MonoBehaviour
 {
-    public static Dictionary<Vector2Int, GameObject> obstacles = new Dictionary<Vector2Int, GameObject>();
-    public static List<Vector2Int> availableTiles = new List<Vector2Int>();
+    public Dictionary<Vector2Int, GameObject> obstacles = new Dictionary<Vector2Int, GameObject>();
+    public List<Vector2Int> availableTiles = new List<Vector2Int>();
 
-    private GameObject tilePrefab;
+    private GameObject obstaclePrefab;
     private GameObject playerPrefab;
+    private GameObject enemyPrefab;
+
+    private Vector2Int playerSpawnPos;
+
+    private int enemyCount = 2;
+    private int enemySpeed;
 
     private int width = 30;
     private int height = 30;
@@ -16,12 +24,18 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        tilePrefab = Resources.Load("Prefabs/Obstacle") as GameObject;
+        obstaclePrefab = Resources.Load("Prefabs/Obstacle") as GameObject;
         playerPrefab = Resources.Load("Prefabs/Player") as GameObject;
+        enemyPrefab = Resources.Load("Prefabs/Enemy") as GameObject;
 
         offset = (width / 2) - 1;
+        enemySpeed = GameManager.speed;
+
         GenerateObstacles();
         SpawnPlayer();
+
+        for (int i = 0; i < enemyCount; i++)
+            SpawnEnemy();
     }
 
     private void GenerateObstacles()
@@ -42,7 +56,7 @@ public class GridManager : MonoBehaviour
         {
             Vector2Int randomTile = availableTiles[Random.Range(0, availableTiles.Count)];
 
-            GameObject tile = Instantiate(tilePrefab, new Vector3(randomTile.x - offset, randomTile.y - offset), Quaternion.identity);
+            GameObject tile = Instantiate(obstaclePrefab, new Vector3(randomTile.x - offset, randomTile.y - offset), Quaternion.identity);
             tile.transform.parent = transform;
 
             obstacles.Add(new Vector2Int(randomTile.x - offset, randomTile.y - offset), tile);
@@ -54,7 +68,22 @@ public class GridManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Vector2Int spawnPos = availableTiles[Random.Range(0, availableTiles.Count)];
-        Instantiate(playerPrefab, new Vector3(spawnPos.x - offset, spawnPos.y - offset), Quaternion.identity);
+        playerSpawnPos = availableTiles[Random.Range(0, availableTiles.Count)];
+        Instantiate(playerPrefab, new Vector3(playerSpawnPos.x - offset, playerSpawnPos.y - offset), Quaternion.identity);
+    }
+
+    private void SpawnEnemy()
+    {
+        GameObject enemy;
+
+        Vector2Int randomSpawnPos = availableTiles[Random.Range(0, availableTiles.Count)];
+
+        if (Vector2Int.Distance(playerSpawnPos, randomSpawnPos) > 10)
+        {
+            enemy = Instantiate(enemyPrefab, new Vector3(randomSpawnPos.x - offset, randomSpawnPos.y - offset), Quaternion.identity);
+            enemy.gameObject.GetComponent<AILerp>().speed = enemySpeed;
+        }
+        else
+            SpawnEnemy();
     }
 }
