@@ -21,6 +21,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        int tutorial_loaded = PlayerPrefs.GetInt("LoadData", 0);
+
+        if (tutorial_loaded == 0)
+        {
+            Debug.Log("Loading Tutorial Scene");
+
+            PlayerPrefs.SetInt("LoadData", 1);
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
+        }
+
         if (SceneManager.GetActiveScene().name == "Highscore")
         {
             scoreDifficulty = GameObject.FindGameObjectWithTag("ScoreDifficulty").GetComponent<TextMeshProUGUI>();
