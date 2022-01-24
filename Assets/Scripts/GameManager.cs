@@ -61,11 +61,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates player score
+    /// </summary>
+    /// <param name="newScore"></param>
     public static void SetScore(int newScore)
     {
         score += newScore;
     }
 
+    /// <summary>
+    /// Sets difficulty to easy
+    /// </summary>
     public void Easy()
     {
         speed = 3;
@@ -76,6 +83,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Sets difficulty to medium
+    /// </summary>
     public void Medium()
     {
         speed = 5;
@@ -86,6 +96,9 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Sets difficulty to hard
+    /// </summary>
     public void Hard()
     {
         speed = 7;
@@ -96,11 +109,17 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Starts game after player presses start button in tutorial
+    /// </summary>
     public void StartGame()
     {
         SceneManager.LoadScene("Welcome", LoadSceneMode.Single);
     }
 
+    /// <summary>
+    /// Gets player name from welcome screen
+    /// </summary>
     private void GetName()
     {
         TextMeshProUGUI nameInput = GameObject.FindGameObjectWithTag("NameInput").GetComponent<TextMeshProUGUI>();

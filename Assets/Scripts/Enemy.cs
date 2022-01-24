@@ -46,6 +46,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Makes enemy move away from player while he is buffed
+    /// </summary>
     private void BuffedMovement()
     {
         Vector2Int randomTile = GridManager.availableTiles[Random.Range(0, GridManager.availableTiles.Count)];

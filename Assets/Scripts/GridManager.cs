@@ -48,6 +48,9 @@ public class GridManager : MonoBehaviour
             SpawnEnemy();
     }
 
+    /// <summary>
+    /// Generates obestacles on map
+    /// </summary>
     private void GenerateObstacles()
     {
         int obstaclesToSpawn = 150;
@@ -76,12 +79,18 @@ public class GridManager : MonoBehaviour
         AstarPath.active.Scan();
     }
 
+    /// <summary>
+    /// Instantiates the player
+    /// </summary>
     private void SpawnPlayer()
     {
         playerSpawnPos = availableTiles[Random.Range(0, availableTiles.Count)];
         Instantiate(playerPrefab, new Vector3(playerSpawnPos.x - offset, playerSpawnPos.y - offset), Quaternion.identity);
     }
 
+    /// <summary>
+    /// Spawns enemy 11 blocks or further away from the player
+    /// </summary>
     private void SpawnEnemy()
     {
         GameObject enemy;
@@ -97,6 +106,9 @@ public class GridManager : MonoBehaviour
             SpawnEnemy();
     }
 
+    /// <summary>
+    /// Instantiates food
+    /// </summary>
     public static void SpawnFood()
     {
         if (initialFoodSpawned)

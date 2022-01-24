@@ -56,6 +56,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets player as buffed after eating food
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator AteFood()
     {
         GameManager.isBuffed = true;
