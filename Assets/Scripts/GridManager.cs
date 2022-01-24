@@ -53,7 +53,7 @@ public class GridManager : MonoBehaviour
     /// </summary>
     private void GenerateObstacles()
     {
-        int obstaclesToSpawn = 150;
+        int obstaclesToSpawn = 115;
 
         //Getting all available tiles in grid
         for (int i = 0; i < width; i++)
