@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour
 
     private void BuffedMovement()
     {
-        Vector2Int randomTile = gridManager.availableTiles[Random.Range(0, gridManager.availableTiles.Count)];
+        Vector2Int randomTile = GridManager.availableTiles[Random.Range(0, GridManager.availableTiles.Count)];
         Vector3 randomTileV3 = new Vector3(randomTile.x, randomTile.y);
 
         if (Vector3.Distance(randomTileV3, player.transform.position) > 15)

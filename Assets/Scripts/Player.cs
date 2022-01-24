@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            if (GameManager.lives > 0)
+            if (GameManager.lives > 1)
             {
                 GameManager.lives--;
                 GameManager.isBuffed = false;
@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
             StartCoroutine(AteFood());
 
             Destroy(collision.gameObject);
+            GridManager.SpawnFood();
             GameManager.SetScore(10);
 
             StopCoroutine(AteFood());

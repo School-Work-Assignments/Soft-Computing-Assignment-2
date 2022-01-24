@@ -7,24 +7,24 @@ using System.Linq;
 public class GridManager : MonoBehaviour
 {
     public Dictionary<Vector2Int, GameObject> obstacles = new Dictionary<Vector2Int, GameObject>();
-    public List<Vector2Int> availableTiles = new List<Vector2Int>();
+    public static List<Vector2Int> availableTiles = new List<Vector2Int>();
 
     private GameObject obstaclePrefab;
     private GameObject playerPrefab;
     private GameObject enemyPrefab;
-    private GameObject foodPrefab;
+    private static GameObject foodPrefab;
 
     private Vector2Int playerSpawnPos;
 
     private int enemyCount = 2;
     private int enemySpeed;
 
-    private int foodCount;
-    private bool initialFoodSpawned = false;
+    private static int foodCount;
+    private static bool initialFoodSpawned;
 
     private int width = 30;
     private int height = 30;
-    private int offset;
+    private static int offset;
 
     private void Start()
     {
@@ -32,6 +32,10 @@ public class GridManager : MonoBehaviour
         playerPrefab = Resources.Load("Prefabs/Player") as GameObject;
         enemyPrefab = Resources.Load("Prefabs/Enemy") as GameObject;
         foodPrefab = Resources.Load("Prefabs/Food") as GameObject;
+
+        availableTiles.Clear();
+        initialFoodSpawned = false;
+        foodCount = 5;
 
         offset = (width / 2) - 1;
         enemySpeed = GameManager.speed;
@@ -93,7 +97,7 @@ public class GridManager : MonoBehaviour
             SpawnEnemy();
     }
 
-    public void SpawnFood()
+    public static void SpawnFood()
     {
         if (initialFoodSpawned)
             foodCount = 1;
