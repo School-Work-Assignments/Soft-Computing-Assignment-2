@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private static TextMeshProUGUI scoreDifficulty;
     private static TextMeshProUGUI scoreName;
     private static TextMeshProUGUI scoreNum;
+    private static TextMeshProUGUI scoreValue;
+    private static TextMeshProUGUI healthValue;
 
     private static string difficulty;
     public static int speed = 3;
@@ -32,6 +34,12 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Single);
         }
 
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            scoreValue = GameObject.FindGameObjectWithTag("ScoreValue").GetComponent<TextMeshProUGUI>();
+            healthValue = GameObject.FindGameObjectWithTag("HealthValue").GetComponent<TextMeshProUGUI>();
+        }
+
         if (SceneManager.GetActiveScene().name == "Highscore")
         {
             scoreDifficulty = GameObject.FindGameObjectWithTag("ScoreDifficulty").GetComponent<TextMeshProUGUI>();
@@ -41,6 +49,15 @@ public class GameManager : MonoBehaviour
             scoreName.text = playerName;
             scoreNum.text = score.ToString();
             scoreDifficulty.text = difficulty;
+        }
+    }
+
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Main")
+        {
+            scoreValue.text = score.ToString();
+            healthValue.text = lives.ToString();
         }
     }
 
@@ -77,6 +94,11 @@ public class GameManager : MonoBehaviour
 
         if (playerName != null)
             SceneManager.LoadScene("Main", LoadSceneMode.Single);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene("Welcome", LoadSceneMode.Single);
     }
 
     private void GetName()

@@ -12,6 +12,8 @@ TagManager:
   - ScoreNum
   - ScoreDifficulty
   - TutorialTextArea
+  - ScoreValue
+  - HealthValue
   layers:
   - Default
   - TransparentFX
